@@ -1,0 +1,69 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+    id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.test'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    maven {url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    
+    compileOnly 'org.projectlombok:lombok'
+    compileOnly 'org.springframework.boot:spring-boot-configuration-processor'
+    
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    implementation fileTree(dir: 'lib', includes: ['*jar'])
+    
+    annotationProcessor 'org.projectlombok:lombok'
+    
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'io.springfox:springfox-swagger2:2.9.2'
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+    implementation 'com.google.guava:guava:27.0.1-jre'
+    implementation 'com.alibaba:fastjson:1.2.56'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    implementation 'com.aliyun:aliyun-java-sdk-core:4.3.7'
+    implementation 'com.aliyun:aliyun-java-sdk-dysmsapi:1.1.0'
+
+    //<!--根据手机号查询地区 -->
+    compile 'com.googlecode.libphonenumber:geocoder:2.15'
+    compile 'com.googlecode.libphonenumber:libphonenumber:6.3'
+    compile 'com.googlecode.libphonenumber:prefixmapper:2.15'
+    compile 'com.googlecode.libphonenumber:carrier:1.5'
+    //<!--根据手机号查地区end-->
+    
+    //poi
+    compile('org.apache.poi:poi:3.10-FINAL')
+    compile('org.apache.poi:poi-ooxml:3.10-FINAL')
+    compile('org.apache.poi:poi-scratchpad:3.10-FINAL')
+    compile('org.apache.poi:poi-ooxml-schemas:3.10-FINAL')
+    //poi结束
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << '-Xlint:-deprecation'
+}
