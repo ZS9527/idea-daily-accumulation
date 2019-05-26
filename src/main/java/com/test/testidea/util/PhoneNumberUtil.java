@@ -3,7 +3,7 @@ package com.test.testidea.util;
 import com.google.i18n.phonenumbers.PhoneNumberToCarrierMapper;
 import com.google.i18n.phonenumbers.Phonenumber;
 import com.google.i18n.phonenumbers.geocoding.PhoneNumberOfflineGeocoder;
-import com.test.testidea.domain.PhoneModel.PhoneModel;
+import com.test.testidea.domain.phonemodel.PhoneModel;
 import java.util.Locale;
 
 /**

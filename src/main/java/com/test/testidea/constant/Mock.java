@@ -22,7 +22,7 @@ public interface Mock {
     /**
      * Token
      */
-    String TOKEN = JwtUtils.TOKEN_PREFIX + "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE1ODU0NDgxMTQsInN1YiI6IjEzMzU1NTU4ODg4IiwiY3JlYXRlZCI6MTU1MzgyNTcxNDI0OH0.xkXVkrpdT8Yc35q2xxyt1hdbuM8ilyBbjpuyiTsnAfT1_hgfkzF1scQA8spNanlXXxU9sxYzH6omBFIgL6ahlQ";
+    String TOKEN = JwtUtils.TOKEN_PREFIX + "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE1NjEwODU0MzAsInN1YiI6ImFkbWluIiwiY3JlYXRlZCI6MTU1ODQwNzAzMDk4Mn0.a4C9VeVSkS89U72FOSt1jcbP63bnpsHqphOM5bUNu2COPAJHKkXlXtLk-DEm-bK30nRP0LN3VeMWnDQ_bKi_5w";
 
     /**
      * 用户真实姓名
@@ -38,11 +38,10 @@ public interface Mock {
      * 密码
      */
     String PASSWORD = "123456";
-
     /**
      * 手机号
      */
-    String MOBILE = "13355558888";
+    String MOBILE = "13355552222";
 
     /**
      * 验证码
@@ -52,7 +51,7 @@ public interface Mock {
     /**
      * 验证码
      */
-    String EMAIL = "devfzm@gmail.com";
+    String EMAIL = "13355552222@gmail.com";
 
     /**
      * 时间
@@ -63,6 +62,7 @@ public interface Mock {
      * IP
      */
     String IP = "192.168.1.1";
+
 
     /**
      * 图片地址
@@ -80,29 +80,45 @@ public interface Mock {
     String FALSE = "false";
 
     /**
-     * 在押人员编号
+     * 区域字典的id
      */
-    String CUSTODY_UUID = "9527";
+    String TOWNSHIPID = "26";
 
     /**
-     * RTC AppId
+     * 部门字典的id
      */
-    String RTC_APP_ID = "1400192692";
+    String DEPARTMENTID = "20";
 
     /**
-     * RTC 房间号
+     * 资金类型字典id
      */
-    String RTC_ROOM_ID = "100000001";
+    String SPECIALMONEYID = "103";
 
     /**
-     * RTC 用户编号
+     * 专项项目类型字典id
      */
-    String RTC_USER_ID = "95f5bd103d6449158d0d245cc03d1ac5";
+    String SPECIALNAMEID = "98";
 
     /**
-     * RTC 用户签名
+     * 专项项目名称字典id
      */
-    String RTC_USER_SIG = "eJw1kN1SgzAQRt*Fa0eTkKXgnfxocUSKMNV6k0mTAJlOU6RRi47vLmK5PWe-2f3226keykvedVoybpnbS*faQc7FhNWp071ivLaqHzEGAILQbLVUxupaTy6AGrYSI1d6lAYYfIkkoSDESDAXcM4cdTMOZ8kmSou4zT5RvjXkcLeySeNRN-Lsi73lWK*vhsfnzeIJikoOy9Vbk7Y3qUle181Jm0gc*2hffYTl0se7ohV5DGVW5RDDIvwKi-t8XiZ3bGr2dztFCAfEC8hZWr1X-51cHzB4M*dCHN6NZXbo1PSKn1*pulZT";
+    String SPECIALPROJECTNAMEID = "28";
+
+    /**
+     * 项目状态
+     */
+    String REVIEW = "3";
+
+    /**
+     * 指南id
+     */
+    String GUIDEID = "1";
+
+    /**
+     * 查询用用户名
+     */
+    String USERNAME = "16";
+
 
     /**
      * Generate Mock Data
@@ -110,15 +126,5 @@ public interface Mock {
      */
     static void main(String[] args) {
         System.out.println("UUID: " + Commons.uuid());
-//
-//        Long appId = 1400192692L;
-//        String privateKey = "-----BEGIN PRIVATE KEY-----\n"
-//            + "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgn/CSKRlSKFWhehWN\n"
-//            + "MjQ3EdzaKUcpl3jNWbsyzMjgNeihRANCAASrwf9teJxxVHSullpkBYXSaik550Ub\n"
-//            + "NlquZCSJlI5UYXHQHwreTCqeU6YTZgg9TW5A1VJTUAC4QGo3TgFJWtLP\n"
-//            + "-----END PRIVATE KEY-----";
-//        String uuid = Commons.uuid();
-//        String rtcUserSig = tls_sigature.genSig(appId, uuid, privateKey).urlSig;
-//        System.out.println(uuid + ":" + rtcUserSig);
     }
 }

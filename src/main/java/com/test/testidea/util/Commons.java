@@ -33,6 +33,10 @@ public class Commons {
         "X-Real-IP"
     };
 
+    private Commons() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /***
      * 获取客户端ip地址(可以穿透代理)
      * @param request HttpServletRequest
@@ -73,6 +77,15 @@ public class Commons {
      */
     public static boolean isNullOrEmpty(Map<?, ?> map) {
         return map == null || map.isEmpty();
+    }
+
+    /**
+     * 判断Array是否为空
+     * @param array Object[]
+     * @return 是否为空
+     */
+    public static boolean isNullOrEmpty(Object[] array) {
+        return array == null || array.length == 0;
     }
 
 }

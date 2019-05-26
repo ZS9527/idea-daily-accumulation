@@ -1,4 +1,4 @@
-package com.test.testidea.domain.PhoneModel;
+package com.test.testidea.domain.phonemodel;
 
 /**
  * 手机号归属地操作

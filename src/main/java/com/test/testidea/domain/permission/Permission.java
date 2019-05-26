@@ -1,6 +1,5 @@
 package com.test.testidea.domain.permission;
 
-import org.hibernate.annotaions.Comment;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,13 +12,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotaions.Comment;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
  * 权限
  *
- * @author fangzhimin
- * @date 2018/9/3 17:08
+ * @author ifzm
+ * @version 0.3
+ * @date 2019/4/28 10:01
  */
 
 @Data
@@ -42,14 +43,32 @@ public class Permission implements GrantedAuthority, Serializable {
     @Comment("名称")
     String name;
 
+    @Comment("标签")
+    String title;
+
+    @Comment("图标")
+    String icon;
+
+    @Comment("权限URL")
+    String path;
+
+    @Comment("权限URL模式（eg: *,GET,POST,PUT...）")
+    String method;
+
+    @Comment("权限规则（1-前端路由,2-后端接口）")
+    Integer rule;
+
+    @Comment("权限类型（1-菜单,2-按钮）")
+    Integer type;
+
+    @Comment("按钮指令（当权限类型为按钮时指定，eg：add,delete,edit,query,get,enable,disable,import,export...）")
+    String action;
+
     @Comment("描述")
     String description;
 
-    @Comment("权限URL")
-    String url;
-
-    @Comment("权限URL模式（eg: GET,POST,PUT...）")
-    String method;
+    @Comment("是否隐藏")
+    Boolean hidden;
 
     @Comment("权限父级ID")
     Long pid;
@@ -59,7 +78,7 @@ public class Permission implements GrantedAuthority, Serializable {
 
     @Override
     public String getAuthority() {
-        return this.method + " " + this.url;
+        return this.method + " " + this.path;
     }
 
 }

@@ -1,8 +1,6 @@
 package com.test.testidea.secruity;
 
 import com.test.testidea.domain.permission.Permission;
-import java.util.Collection;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -13,10 +11,13 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
+
 /**
  * 访问决策管理器
  *
- * @author
+ * @author fangzhimin
  * @date 2018/9/4 10:28
  */
 
@@ -29,9 +30,8 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
         HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
         for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
             if (grantedAuthority instanceof Permission) {
-                Permission managePermission = (Permission) grantedAuthority;
-                boolean checked = new AntPathRequestMatcher(managePermission.getUrl()).matches(request) && ("ALL".equals(
-                    managePermission.getMethod()) || request.getMethod().equals(managePermission.getMethod()));
+                Permission permission = (Permission) grantedAuthority;
+                boolean checked = new AntPathRequestMatcher(permission.getPath()).matches(request) && ("*".equals(permission.getMethod()) || request.getMethod().equals(permission.getMethod()));
                 if (checked) {
                     return;
                 }

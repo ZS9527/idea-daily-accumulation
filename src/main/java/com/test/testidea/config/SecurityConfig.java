@@ -65,8 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/login/mobile").permitAll()
                 .antMatchers("/auth/getMobileCode").permitAll()
                 .antMatchers("/rtc/getAppId").permitAll()
-                .anyRequest().authenticated().and()
-//                 .anyRequest().permitAll().and()
+//                .anyRequest().authenticated().and()
+                 .anyRequest().permitAll().and()
                 .addFilterBefore(securityFilter, FilterSecurityInterceptor.class)
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .httpBasic();
