@@ -21,3 +21,10 @@ spring:
     host: 127.0.0.1
     password: 123456
     timeout: 10000ms
+hbase:
+  config:
+    hbase.zookeeper.quorum: 192.168.99.100
+    hbase.zookeeper.port: 2181
+    hbase.zookeeper.znode: /hbase
+    hbase.client.keyvalue.maxsize: 1572864000
+

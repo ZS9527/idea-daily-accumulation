@@ -49,6 +49,8 @@ dependencies {
     implementation 'com.aliyun:aliyun-java-sdk-core:4.3.7'
     implementation 'com.aliyun:aliyun-java-sdk-dysmsapi:1.1.0'
 
+    compile('commons-net:commons-net:3.6')
+
     //<!--根据手机号查询地区 -->
     compile 'com.googlecode.libphonenumber:geocoder:2.15'
     compile 'com.googlecode.libphonenumber:libphonenumber:6.3'
@@ -62,6 +64,14 @@ dependencies {
     compile('org.apache.poi:poi-scratchpad:3.10-FINAL')
     compile('org.apache.poi:poi-ooxml-schemas:3.10-FINAL')
     //poi结束
+
+
+    compile (group: 'org.apache.hbase', name: 'hbase-client', version: '2.1.1'){
+        exclude module: 'servlet-api'
+    }
+    compile (group: 'org.apache.hbase', name: 'hbase', version: '2.1.1', ext: 'pom')
+
+
 }
 
 tasks.withType(JavaCompile) {

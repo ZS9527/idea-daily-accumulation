@@ -90,7 +90,7 @@ public class FileOperationServiceImpl implements FileOperationService {
             ZipOutputStream out = new ZipOutputStream(response.getOutputStream());
             for(Iterator<FileOperation> it = fileList.iterator();it.hasNext();){
                 FileOperation file = it.next();
-                FileUtil.doCompress(Static.URL + file.getSaveUrl(), out);
+                FileUtil.doZip(new File(Static.URL + file.getSaveUrl()), out, "", file.getFileName());
                 response.flushBuffer();
             }
             out.close();

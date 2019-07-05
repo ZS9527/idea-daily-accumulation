@@ -259,6 +259,31 @@ public class FileUtil {
         fis.close();
     }
 
+    /**
+     * 压缩文件
+     * @param inFile 被压缩文件
+     * @param out 压缩文件流
+     * @param dir 压缩文件保存路径
+     * @throws IOException
+     */
+    public static void doZip(File inFile, ZipOutputStream out, String dir, String entryName) throws IOException {
+        if (!"".equals(dir)) {
+            entryName = dir + "/" + entryName;
+        }
+        ZipEntry entry = new ZipEntry(entryName);
+        out.putNextEntry(entry);
+
+        byte[] buffer = new byte[1024];
+        int len = 0 ;
+        FileInputStream fis = new FileInputStream(inFile);
+        while ((len = fis.read(buffer)) > 0) {
+            out.write(buffer, 0, len);
+            out.flush();
+        }
+        out.closeEntry();
+        fis.close();
+    }
+
     public static void main(String[] args) throws IOException {
         doCompress("D:/java/", "D:/java.zip");
     }
