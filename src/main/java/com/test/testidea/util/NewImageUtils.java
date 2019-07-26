@@ -6,12 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-
 import java.io.OutputStream;
 import javax.imageio.ImageIO;
 
@@ -40,19 +36,28 @@ public class NewImageUtils {
 //    Double baseMapMaxLat = 53.0;
 
 //    /**
-//     * 层图经纬度范围
+//     * 国界图经纬度范围
 //     */
 //    Double floorMapMinLon = 73.446960;
 //    Double floorMapMaxLon = 135.085831;
 //    Double floorMapMinLat = 3.408477;
 //    Double floorMapMaxLat = 53.557926;
 
+//    /**
+//     * 省界图经纬度范围
+//     */
+//    Double floorMapMinLon = 73.500145;
+//    Double floorMapMaxLon = 135.088932;
+//    Double floorMapMinLat = 18.158746;
+//    Double floorMapMaxLat = 53.561439;
+
+
     /**
      * 二层图经纬度范围
      */
-    Double floorMapMinLon = 73.446960;
+    Double floorMapMinLon = 73.746960;
     Double floorMapMaxLon = 135.085831;
-    Double floorMapMinLat = 1.558746;
+    Double floorMapMinLat = 0.508746;
     Double floorMapMaxLat = 53.557926;
 
 
@@ -62,7 +67,7 @@ public class NewImageUtils {
      * @Description: 生成水印并返回java.awt.image.BufferedImage
      * @param filePath
      *            源文件(图片)
-     * @param floorFilePath
+     * @param floorFilePath-
      *            水印文件(图片)
      * @param x
      *            距离右下角的X偏移量
@@ -161,7 +166,7 @@ public class NewImageUtils {
      */
     public static void main(String[] args) throws IOException {
         String baseFilePath = "D://finance//b.png";
-        String firstFloorFilePath = "D://finance//amin.png";
+        String firstFloorFilePath = "D://finance//heia.png";
         String secordBaseFilePath = "D://finance//new.png";
         NewImageUtils newImageUtils = new NewImageUtils();
         // 构建叠加层
@@ -169,12 +174,12 @@ public class NewImageUtils {
         // 输出水印图片
         newImageUtils.generateWaterFile(buffImg, secordBaseFilePath);
 
-//        String secordFloorFilePath = "D://finance//cmin.png";
-//        String savePath = "D://finance//save1.png";
-//        // 构建叠加层
-//        BufferedImage tempImg = newImageUtils.watermark(secordBaseFilePath, secordFloorFilePath, 50, 50, 1.0f);
-//        // 输出水印图片
-//        newImageUtils.generateWaterFile(tempImg, savePath);
+        String secordFloorFilePath = "D://finance//heic.png";
+        String savePath = "D://finance//save1.png";
+        // 构建叠加层
+        BufferedImage tempImg = newImageUtils.watermark(secordBaseFilePath, secordFloorFilePath, 50, 50, 1.0f);
+        // 输出水印图片
+        newImageUtils.generateWaterFile(tempImg, savePath);
 
     }
 }

@@ -16,7 +16,10 @@ configurations {
 }
 
 repositories {
+    maven { url 'http://download.osgeo.org/webdav/geotools/' }
     maven {url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+    maven { url 'https://repo.spring.io/snapshot' }
+    maven { url 'https://repo.spring.io/milestone' }
     mavenLocal()
     mavenCentral()
 }
@@ -66,12 +69,24 @@ dependencies {
     //poi结束
 
 
+    //hbase
     compile (group: 'org.apache.hbase', name: 'hbase-client', version: '2.1.1'){
         exclude module: 'servlet-api'
     }
     compile (group: 'org.apache.hbase', name: 'hbase', version: '2.1.1', ext: 'pom')
 
+    compile (group: 'org.springframework.data', name: 'spring-data-hadoop-boot', version: '2.1.1.RELEASE'){
+        exclude module: 'servlet-api'
+    }
+    //hbase结束
 
+    //geotool地图绘制
+    implementation group: 'org.geotools', name: 'gt-shapefile', version: '21.0'
+    implementation group: 'org.geotools', name: 'gt-geojson', version: '21.0'
+    implementation group: 'org.meteothink', name: 'wContour', version: '1.6.1'
+    implementation group: 'com.vividsolutions', name: 'jts', version: '1.13'
+    implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.16.1'
+    //geotool地图绘制
 }
 
 tasks.withType(JavaCompile) {
