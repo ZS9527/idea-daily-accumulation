@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.test.testidea.util.FeatureJSONUtil;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -16,12 +17,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.geojson.feature.FeatureJSON;
 
 /**
- * TODO
+ * 地图json处理
  *
  * @author zhangshuai
  * @date 2019/7/22 14:20
@@ -96,6 +99,7 @@ public class SpliceGeoJson {
 //
 //        }
 
+
         File fileJson = new File("D:\\zjtq\\pre.txt");
         if (fileJson.isFile()) {
             FileReader filereader= null;
@@ -141,11 +145,11 @@ public class SpliceGeoJson {
             try {
                 ByteArrayInputStream bis = null;
                 SimpleFeatureCollection fs = null;
-                bis = new ByteArrayInputStream(jsonFile.toJSONString().getBytes());
+                bis = new ByteArrayInputStream(json.getBytes());
                 // geojson读取工具
-                FeatureJSON fjson = new FeatureJSON();
+                FeatureJSON featureJSONUtil = new FeatureJSON();
                 // 获取要素集合
-                fs = (SimpleFeatureCollection) fjson.readFeatureCollection(bis);
+                fs = (SimpleFeatureCollection) featureJSONUtil.readFeatureCollection(bis);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -158,6 +162,7 @@ public class SpliceGeoJson {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
 
         }
     }

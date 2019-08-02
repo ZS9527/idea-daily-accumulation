@@ -18,10 +18,10 @@ import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.Get;
-import org.apache.hadoop.hbase.client.HBaseAdmin;
-import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.ResultScanner;
+import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.client.TableDescriptor;
 import org.apache.hadoop.hbase.client.TableDescriptorBuilder;
@@ -114,26 +114,56 @@ public class HbaseService {
         table.close();
     }
 
-    /*
-     * 根据rwokey查询
-     *
-     * @rowKey rowKey
-     *
-     * @tableName 表名
+    /**
+     * 查询
+     * @param tableName 表名
+     * @param rowKey 行key
+     * @param family 列族
+     * @param column 行
+     * @return
+     * @throws IOException
      */
-    public  Result getResult(String tableName, String rowKey)
+    public  Result getResult(String tableName, String rowKey, String family, String column)
         throws IOException {
         Get get = new Get(Bytes.toBytes(rowKey));
-        Table table = conn.getTable(TableName.valueOf(tableName));
+        Table table = conn.getTable(TableName.valueOf(Bytes.toBytes(tableName)));
         Result result = table.get(get);
-        for (Cell kv : result.listCells()) {
-            System.out.println("family:" + Bytes.toString(kv.getFamilyArray()));
-            System.out.println("qualifier:" + Bytes.toString(kv.getQualifierArray()));
-            System.out.println("value:" + Bytes.toString(kv.getValueArray()));
-            System.out.println("Timestamp:" + kv.getTimestamp());
-            System.out.println("-------------------------------------------");
+        String resultStr = null;
+        if( !get.isCheckExistenceOnly()){
+            get.addColumn(Bytes.toBytes(family), Bytes.toBytes(column));
+            Result res = table.get(get);
+            byte[] resultB = res.getValue(Bytes.toBytes(family),
+                Bytes.toBytes(column));
+            resultStr = Bytes.toString(resultB);
         }
+        System.out.println(resultStr);
         return result;
+    }
+
+    /**
+     * 查询
+     * @param tableName 表名
+     * @return
+     * @throws IOException
+     */
+    public void getResultList(String tableName)
+        throws IOException {
+        Table table = conn.getTable(TableName.valueOf(Bytes.toBytes(tableName)));
+        ResultScanner rs = table.getScanner(new Scan());
+        for (Result r : rs) {
+            System.out.println("获得到rowkey:" + new String(r.getRow()));
+            for (Cell cell : r.listCells()) {
+                System.out.println("列：" + new String(cell.getQualifierArray(), cell
+                    .getQualifierOffset(), cell
+                    .getQualifierLength())
+                    + ":" + new String(cell.getValueArray(), cell
+                    .getValueOffset(), cell
+                    .getValueLength()));
+
+            }
+        }
+
+        return ;
     }
 
     /*
@@ -157,13 +187,13 @@ public class HbaseService {
     }
 
 
-
     public static void main(String[] args) throws Exception {
         HbaseService hbase = new HbaseService();
 //        hbase.createTable("t1","onehour", "threehour");
-        hbase.deleteTable("t1");
-//        hbase.addData("t1","t1", "two");
-//        hbase.getResult("t1", "row0");
-//        hbase.deleteColumn("t1", "row0", "t1", "column0");
+//        hbase.deleteTable("t1");
+        hbase.addData("t1","threehour", "one", "name", "Jerry");
+//        hbase.getResult("t1", "two", "onehour", "name");
+//        hbase.getResultList("t1");
+//        hbase.deleteColumn("t1", "one", "threehour", "name");
     }
 }
