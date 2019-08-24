@@ -31,6 +31,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    //amqp rabbitmq
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
     
     compileOnly 'org.projectlombok:lombok'
     compileOnly 'org.springframework.boot:spring-boot-configuration-processor'
@@ -70,14 +72,14 @@ dependencies {
 
 
     //hbase
-    compile (group: 'org.apache.hbase', name: 'hbase-client', version: '2.1.1'){
-        exclude module: 'servlet-api'
-    }
-    compile (group: 'org.apache.hbase', name: 'hbase', version: '2.1.1', ext: 'pom')
-
-    compile (group: 'org.springframework.data', name: 'spring-data-hadoop-boot', version: '2.1.1.RELEASE'){
-        exclude module: 'servlet-api'
-    }
+//    compile (group: 'org.apache.hbase', name: 'hbase-client', version: '2.1.1'){
+//        exclude module: 'servlet-api'
+//    }
+//    compile (group: 'org.apache.hbase', name: 'hbase', version: '2.1.1', ext: 'pom')
+//
+//    compile (group: 'org.springframework.data', name: 'spring-data-hadoop-boot', version: '2.1.1.RELEASE'){
+//        exclude module: 'servlet-api'
+//    }
     //hbase结束
 
     //geotool地图绘制
@@ -87,6 +89,8 @@ dependencies {
     implementation group: 'com.vividsolutions', name: 'jts', version: '1.13'
     implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.16.1'
     //geotool地图绘制
+
+    compile('org.jsoup:jsoup:1.11.3')
 }
 
 tasks.withType(JavaCompile) {

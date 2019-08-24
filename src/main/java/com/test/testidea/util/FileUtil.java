@@ -106,8 +106,8 @@ public class FileUtil {
      * @throws Exception
      */
     private static void output(HttpServletResponse response, File file, String name) throws Exception {
-        response.setHeader("conent-type", "application/octet-stream");
-        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Encoding", "gzip");
+        response.setContentType("application/x-protobuf");
         response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder
             .encode(name, "UTF-8"));
         OutputStream os = response.getOutputStream();

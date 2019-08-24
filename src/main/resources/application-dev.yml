@@ -21,6 +21,18 @@ spring:
     host: 127.0.0.1
     password: 123456
     timeout: 10000ms
+  rabbitmq:
+    host: 192.168.99.100
+    port: 5672
+    username: guest
+    password: guest
+#    publisher-confirms: true
+#    publisher-returns: true
+#    listener:
+#      direct:
+#        acknowledge-mode: manual
+#      simple:
+#        acknowledge-mode: manual
 hbase:
   config:
     hbase.zookeeper.quorum: myhbase
