@@ -7,8 +7,9 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import javax.imageio.ImageIO;
 
 /**
@@ -103,12 +104,6 @@ public class NewImageUtils {
         int width = floorImgWidth;
         int height = floorImgHeight;
 
-        //压缩图片
-//        FileOutputStream fos = new FileOutputStream("D://finance//c.jpg");
-//        thumbnail(new File(floorFilePath), width/2, height/2, fos);
-
-
-
         // 在图形和图像中实现混合和透明效果
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha));
         // 绘制
@@ -120,24 +115,23 @@ public class NewImageUtils {
     /**
      * 按照固定宽高原图压缩
      *
-     * @param img
+     * @param filePath
      * @param width
      * @param height
-     * @param out
      * @throws IOException
      */
-    public void thumbnail(File img, int width, int height, OutputStream out) throws IOException {
-        BufferedImage BI = ImageIO.read(img);
-        Image image = BI.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+    public void thumbnail(String filePath, int width, int height) throws IOException {
+        BufferedImage baseImg = ImageIO.read(new File(filePath));
+        Image image = baseImg.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 
-        BufferedImage tag = new BufferedImage(width, height,
-            BufferedImage.TYPE_INT_RGB);
+        BufferedImage tag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics g = tag.getGraphics();
         g.setColor(Color.RED);
         // 绘制处理后的图
         g.drawImage(image, 0, 0, null);
         g.dispose();
-        ImageIO.write(tag, "JPEG", out);
+        FileOutputStream out = new FileOutputStream(filePath);
+        ImageIO.write(tag, "PNG", out);
     }
 
     /**
@@ -165,16 +159,20 @@ public class NewImageUtils {
      * @author bls
      */
     public static void main(String[] args) throws IOException {
-        String baseFilePath = "D://finance//b.png";
-        String firstFloorFilePath = "D://finance//heia.png";
+        String baseFilePath = "D://finance//color.png";
+        String firstFloorFilePath = "D://finance//guojie.png";
         String secordBaseFilePath = "D://finance//new.png";
+
         NewImageUtils newImageUtils = new NewImageUtils();
+
+
+        newImageUtils.thumbnail(baseFilePath, 1750,1350);
         // 构建叠加层
         BufferedImage buffImg = newImageUtils.watermark(baseFilePath, firstFloorFilePath, 50, 50, 1.0f);
         // 输出水印图片
         newImageUtils.generateWaterFile(buffImg, secordBaseFilePath);
 
-        String secordFloorFilePath = "D://finance//heic.png";
+        String secordFloorFilePath = "D://finance//shengjie.png";
         String savePath = "D://finance//save1.png";
         // 构建叠加层
         BufferedImage tempImg = newImageUtils.watermark(secordBaseFilePath, secordFloorFilePath, 50, 50, 1.0f);

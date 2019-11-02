@@ -91,6 +91,10 @@ dependencies {
     //geotool地图绘制
 
     compile('org.jsoup:jsoup:1.11.3')
+
+    //netty
+    compile group: 'io.netty', name: 'netty-all', version: '4.1.42.Final'
+
 }
 
 tasks.withType(JavaCompile) {

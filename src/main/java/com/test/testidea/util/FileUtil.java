@@ -2,12 +2,14 @@ package com.test.testidea.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.URLEncoder;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -284,8 +286,44 @@ public class FileUtil {
         fis.close();
     }
 
+    /**
+     * 按行写入文件
+     * @param outFile 写入文件
+     * @param title 标题
+     * @param dateTime 预报时间
+     * @param values 值
+     * @param isReBuild 是否追加
+     * @throws IOException
+     */
+    public static void writeFile(File outFile, String title, String dateTime, Double[][] values, boolean isReBuild) throws IOException {
+        if (!outFile.exists()) {
+            outFile.mkdirs();
+        }
+
+        FileOutputStream fos = new FileOutputStream(outFile, isReBuild);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+        if (title != null) {
+            bw.write(title + "\r\n");
+        }
+        bw.write("数据时间:" + dateTime + "\r\n");
+        for (int i = 0; i < values.length; i++) {
+            for (int j = 0; j < values[i].length; j++) {
+                bw.write(values[i][j] + "\t");
+            }
+            bw.write("\r\n");
+        }
+        bw.close();
+    }
+
     public static void main(String[] args) throws IOException {
-        doCompress("D:/java/", "D:/java.zip");
+        File file = new File("D:/risk/test.txt");
+        Double[][] test = new Double[3][3];
+        for (int i = 0;i < 3; i++) {
+            for (int j = 0; j < 3;j ++) {
+                test[i][j] = Double.valueOf(i);
+            }
+        }
+        writeFile(file, "标题", "2019-09-01 00:00:00", test, true);
     }
 
 
