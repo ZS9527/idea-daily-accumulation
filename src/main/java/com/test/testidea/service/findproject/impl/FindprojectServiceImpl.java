@@ -12,14 +12,10 @@ import com.test.testidea.param.findproject.department.DepartmentProjectPageParam
 import com.test.testidea.param.findproject.department.DepartmentProjectParam;
 import com.test.testidea.service.findproject.FindprojectService;
 import com.test.testidea.util.Commons;
-import com.test.testidea.util.Excel;
-import com.test.testidea.util.ExcelUtil;
-import com.test.testidea.util.FileUtil;
 import com.test.testidea.vo.findproject.department.DepartmentProjectExcelInfoVo;
 import com.test.testidea.vo.findproject.department.DepartmentProjectInfoVo;
 import com.test.testidea.vo.findproject.department.DepartmentProjectPage;
 import com.test.testidea.vo.findproject.department.DepartmentProjectPageVo;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -138,9 +134,9 @@ public class FindprojectServiceImpl implements FindprojectService {
                 .build();
             return projectPage;
         }).collect(Collectors.toList());
-        ExcelUtil excelUtil = new ExcelUtil();
-        File excelFile = excelUtil.export(departmentProjectExcelInfoVos, Excel.XLS);
-        FileUtil.out(response, excelFile, "部门上报项目列表" + Excel.XLS);
+//        ExcelUtil excelUtil = new ExcelUtil();
+//        File excelFile = excelUtil.export(departmentProjectExcelInfoVos, Excel.XLS);
+//        FileUtil.out(response, excelFile, "部门上报项目列表" + Excel.XLS);
     }
 
 }

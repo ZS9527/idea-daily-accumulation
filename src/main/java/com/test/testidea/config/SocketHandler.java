@@ -1,11 +1,13 @@
 package com.test.testidea.config;
 
+import com.test.testidea.constant.DateFormatter;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
 
 /**
  * socket服务端
@@ -68,6 +70,9 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
         String rev = getMessage(buf);
         System.out.println("客户端收到服务器数据:" + rev);
 
+        String reply = "我已经收到信息：时间为" + LocalDateTime.now().format(DateFormatter.DATE);
+        ByteBuf resp = Unpooled.copiedBuffer(reply.getBytes());
+        ctx.write(resp);
     }
 
     /**

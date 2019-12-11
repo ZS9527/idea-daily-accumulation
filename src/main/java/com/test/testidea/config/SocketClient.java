@@ -2,11 +2,17 @@ package com.test.testidea.config;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.util.CharsetUtil;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.CountDownLatch;
+import javax.persistence.Entity;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 /**
  * socket客户端
@@ -14,7 +20,24 @@ import java.nio.charset.Charset;
  * @author zhangshuai
  * @date 2019/11/2 15:28
  */
+
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Entity
 public class SocketClient extends SimpleChannelInboundHandler<ByteBuf> {
+
+    private CountDownLatch lathc;
+    /**
+     * 服务端返回的结果
+     */
+    private String result;
+
+    public SocketClient(CountDownLatch lathc) {
+        this.lathc = lathc;
+    }
 
     /**
      * 向服务端发送数据
@@ -22,11 +45,11 @@ public class SocketClient extends SimpleChannelInboundHandler<ByteBuf> {
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
         System.out.println("客户端与服务端通道-开启：" + ctx.channel().localAddress() + "channelActive");
+//        String sendInfo = "Hello 这里是客户端  你好啊！";
+//        System.out.println("客户端准备发送的数据包：" + sendInfo);
+//        // 必须有flush
+//        ctx.writeAndFlush(Unpooled.copiedBuffer(sendInfo, CharsetUtil.UTF_8));
 
-        String sendInfo = "Hello 这里是客户端  你好啊！";
-        System.out.println("客户端准备发送的数据包：" + sendInfo);
-        // 必须有flush
-        ctx.writeAndFlush(Unpooled.copiedBuffer(sendInfo, CharsetUtil.UTF_8));
     }
 
     /**
@@ -43,11 +66,18 @@ public class SocketClient extends SimpleChannelInboundHandler<ByteBuf> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) {
-        System.out.println("读取客户端通道信息..");
         ByteBuf buf = msg.readBytes(msg.readableBytes());
         System.out.println(
-            "客户端接收到的服务端信息:" + ByteBufUtil.hexDump(buf) + "; 数据包为:" + buf
-                .toString(Charset.forName("utf-8")));
+            "客户端接收到的服务端信息:" + ByteBufUtil.hexDump(buf) + "; 数据包为:" + buf.toString(
+                StandardCharsets.UTF_8));
+        result = buf.toString(StandardCharsets.UTF_8);
+        //消息收取完毕后释放同步锁 计数器减去1
+        try {
+            lathc.countDown();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -55,4 +85,5 @@ public class SocketClient extends SimpleChannelInboundHandler<ByteBuf> {
         ctx.close();
         System.out.println("异常退出:" + cause.getMessage());
     }
+
 }

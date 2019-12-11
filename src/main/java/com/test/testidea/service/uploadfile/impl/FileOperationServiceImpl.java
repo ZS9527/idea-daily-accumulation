@@ -10,14 +10,10 @@ import com.test.testidea.param.fileoperation.DownloadFileParam;
 import com.test.testidea.param.fileoperation.DownloadZipFileParam;
 import com.test.testidea.service.uploadfile.FileOperationService;
 import com.test.testidea.util.Commons;
-import com.test.testidea.util.Excel;
-import com.test.testidea.util.ExcelUtil;
 import com.test.testidea.util.FileUtil;
-import com.test.testidea.vo.Excel.ExcelVo;
 import com.test.testidea.vo.file.FileVo;
 import java.io.File;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.zip.ZipOutputStream;
@@ -103,11 +99,11 @@ public class FileOperationServiceImpl implements FileOperationService {
     public void downloadExcelFile(DownloadZipFileParam param, HttpServletResponse response)
         throws Exception {
 
-        List<ExcelVo> excelVoList = new ArrayList<>();
-        ExcelVo excelVo = ExcelVo.builder().id(1L).name("张三").review(3).build();
-        excelVoList.add(excelVo);
-        ExcelUtil excelUtil = new ExcelUtil();
-        File excelFile = excelUtil.export(excelVoList, Excel.XLS);
-        FileUtil.out(response, excelFile, "myFile" + Excel.XLS);
+//        List<ExcelVo> excelVoList = new ArrayList<>();
+//        ExcelVo excelVo = ExcelVo.builder().id(1L).name("张三").review(3).build();
+//        excelVoList.add(excelVo);
+//        ExcelUtil excelUtil = new ExcelUtil();
+//        File excelFile = excelUtil.export(excelVoList, Excel.XLS);
+//        FileUtil.out(response, excelFile, "myFile" + Excel.XLS);
     }
 }

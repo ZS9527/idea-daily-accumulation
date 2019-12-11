@@ -64,10 +64,10 @@ dependencies {
     //<!--根据手机号查地区end-->
     
     //poi
-    compile('org.apache.poi:poi:3.10-FINAL')
-    compile('org.apache.poi:poi-ooxml:3.10-FINAL')
-    compile('org.apache.poi:poi-scratchpad:3.10-FINAL')
-    compile('org.apache.poi:poi-ooxml-schemas:3.10-FINAL')
+//    compile('org.apache.poi:poi:3.10-FINAL')
+//    compile('org.apache.poi:poi-ooxml:3.10-FINAL')
+//    compile('org.apache.poi:poi-scratchpad:3.10-FINAL')
+//    compile('org.apache.poi:poi-ooxml-schemas:3.10-FINAL')
     //poi结束
 
 
@@ -94,6 +94,10 @@ dependencies {
 
     //netty
     compile group: 'io.netty', name: 'netty-all', version: '4.1.42.Final'
+
+    //easyExcel
+    //内含poi，和我自己引入的冲突
+    implementation 'com.alibaba:easyexcel:2.1.1'
 
 }
 

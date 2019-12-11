@@ -19,6 +19,7 @@ import com.test.testidea.param.guide.GuideSaveParam;
 import com.test.testidea.service.guide.GuideService;
 import com.test.testidea.util.Commons;
 import com.test.testidea.util.Excel;
+//import com.test.testidea.util.ExcelUtil;
 import com.test.testidea.util.ExcelUtil;
 import com.test.testidea.util.FileUtil;
 import com.test.testidea.vo.guide.FileInfo;
@@ -207,10 +208,10 @@ public class GuideServiceImpl implements GuideService {
             return page;
         }).collect(Collectors.toList());
 
-        ExcelUtil excelUtil = new ExcelUtil();
-        File excelFile = excelUtil.export(data, Excel.XLS);
-        Files.copy(excelFile, new File("D://finance/" + "myFile" + Excel.XLS));
-        FileUtil.out(response, excelFile, "指南信息列表" + Excel.XLS);
+//        ExcelUtil excelUtil = new ExcelUtil();
+//        File excelFile = excelUtil.export(data, Excel.XLS);
+//        Files.copy(excelFile, new File("D://finance/" + "myFile" + Excel.XLS));
+//        FileUtil.out(response, excelFile, "指南信息列表" + Excel.XLS);
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.test.testidea.util;
 
 import com.test.testidea.config.SocketClient;
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
@@ -13,25 +15,37 @@ import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
+import java.util.concurrent.CountDownLatch;
 
 /**
- * 客户端socket
+ * 测试连接服务端socket
  *
  * @author zhangshuai
- * @date 2019/11/2 15:44
+ * @date 2019/11/2 15:36
  */
 public class SocketClientUtil {
 
     private final String host;
     private final int port;
 
+    public SocketClientUtil() {
+        this(0);
+    }
+
+    public SocketClientUtil(int port) {
+        this("localhost", port);
+    }
+
     public SocketClientUtil(String host, int port) {
         this.host = host;
         this.port = port;
     }
 
-    public void start() throws Exception {
+    public String start(String msg) throws Exception {
         EventLoopGroup group = new NioEventLoopGroup();
+        String result = "";
+        CountDownLatch lathc = new CountDownLatch(1);
+        SocketClient handle = new SocketClient(lathc);
         try {
             Bootstrap b = new Bootstrap();
             // 注册线程池
@@ -44,20 +58,23 @@ public class SocketClientUtil {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) {
-                        System.out.println("正在连接中...");
-                        ch.pipeline().addLast(new StringEncoder(Charset.forName("GBK")));
-                        ch.pipeline().addLast(new SocketClient());
+                        ch.pipeline().addLast(new StringEncoder(Charset.forName("UTF-8")));
+                        ch.pipeline().addLast(handle);
                         ch.pipeline().addLast(new ByteArrayEncoder());
                         ch.pipeline().addLast(new ChunkedWriteHandler());
 
                     }
                 });
-            System.out.println("服务端连接成功..");
 
             // 异步连接服务器
-            ChannelFuture cf = b.connect().sync();
-            // 连接完成
-            System.out.println("服务端连接成功...");
+            ChannelFuture cf = b.connect(host, port).sync();
+
+            ByteBuf buf = Unpooled.copiedBuffer(msg.getBytes());
+            cf.channel().writeAndFlush(buf);
+
+            handle.getLathc().await();
+            result = handle.getResult();
+
             // 异步等待关闭连接channel
             cf.channel().closeFuture().sync();
             // 关闭完成
@@ -67,11 +84,12 @@ public class SocketClientUtil {
             // 释放线程池资源
             group.shutdownGracefully().sync();
         }
+        return result;
     }
 
     public static void main(String[] args) throws Exception {
         // 连接127.0.0.1/65535，并启动
-        new SocketClientUtil("127.0.0.1", 8888).start();
-
+        String result = new SocketClientUtil("127.0.0.1", 8888).start("想怎么发就怎么发");
+        System.out.println("服务器返回 1:" + result);
     }
 }
