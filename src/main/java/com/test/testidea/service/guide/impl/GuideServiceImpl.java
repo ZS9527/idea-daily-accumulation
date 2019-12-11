@@ -1,7 +1,6 @@
 package com.test.testidea.service.guide.impl;
 
 import com.google.common.collect.Lists;
-import com.google.common.io.Files;
 import com.test.testidea.basic.Result;
 import com.test.testidea.constant.Static;
 import com.test.testidea.domain.dictionary.DictionaryType;
@@ -18,16 +17,11 @@ import com.test.testidea.param.guide.GuideFindParam;
 import com.test.testidea.param.guide.GuideSaveParam;
 import com.test.testidea.service.guide.GuideService;
 import com.test.testidea.util.Commons;
-import com.test.testidea.util.Excel;
-//import com.test.testidea.util.ExcelUtil;
-import com.test.testidea.util.ExcelUtil;
-import com.test.testidea.util.FileUtil;
 import com.test.testidea.vo.guide.FileInfo;
 import com.test.testidea.vo.guide.GuideInfoExcelVo;
 import com.test.testidea.vo.guide.GuideInfoVo;
 import com.test.testidea.vo.guide.GuidePage;
 import com.test.testidea.vo.guide.GuidePageVo;
-import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
