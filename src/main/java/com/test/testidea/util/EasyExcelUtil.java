@@ -1,13 +1,7 @@
 package com.test.testidea.util;
 
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.ExcelReader;
-import com.alibaba.excel.read.metadata.ReadSheet;
-import com.test.testidea.config.DemoDataListener;
 import com.test.testidea.domain.emi.EasyExcelUser;
-import com.test.testidea.domain.emi.EasyExcelUserListener;
-import com.test.testidea.domain.emi.EnvirStationExcel;
-import java.io.File;
 import java.util.List;
 
 /**
@@ -22,7 +16,7 @@ public class EasyExcelUtil {
         String fileName = "D://demo.xlsx";
         List<EasyExcelUser> list = EasyExcel.read(fileName).head(EasyExcelUser.class).sheet().doReadSync();
         for (EasyExcelUser data : list) {
-            String sql = "";
+            String sql = "INSERT INTO `env_v2`.`dic_national_air_station`( `address`, `area`, `city`, `city_code`, `city_type_code`, `lat`, `lon`, `province`, `station_code`) VALUES ( '"+ data.getAddress() +"', '"+data.getArea()+"', '"+data.getCity()+"', '"+data.getCityCode()+"', '"+data.getCityTypeCode()+"', '"+data.getLat()+"', '"+data.getLon()+"', '"+data.getProvince()+"', '"+data.getStationCode()+"');";
             System.out.println(sql);
         }
 
